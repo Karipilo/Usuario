@@ -1,8 +1,7 @@
-package com.model;
+package com.usuario.usuario.model;
 
-import com.model.dto.UsuarioDto;
-import com.model.entity.UsuarioEntity;
-
+import com.usuario.usuario.model.dto.UsuarioDto;
+import com.usuario.usuario.model.entity.UsuarioEntity;
 
 public class UsuarioMapper {
 
@@ -12,11 +11,10 @@ public class UsuarioMapper {
         }
 
         return new UsuarioDto(
-            entity.getIdUsuario(),
-            entity.getNombreUsuario(),
-            entity.getAppaterno(),
-            entity.getEmailUsuario()          
-       
+                entity.getIdUsuario(),
+                entity.getNombreUsuario(),
+                entity.getAppaterno(),
+                entity.getEmailUsuario()
         );
     }
 
@@ -32,5 +30,4 @@ public class UsuarioMapper {
         return entity;
     }
 
-    
 }

@@ -1,5 +1,4 @@
-package com.model.entity;
-
+package com.usuario.usuario.model.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
@@ -14,17 +13,18 @@ import lombok.Data;
 @Table(name = "Usuarios")
 
 public class UsuarioEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idUsuario;
 
     @Column(name = "nombre_usuario", nullable = false, length = 50)
     @NotNull
-    @Size(max = 50, message = "El nombre no puede tener más de 50 caracteres")  
+    @Size(max = 50, message = "El nombre no puede tener más de 50 caracteres")
     private String nombreUsuario;
 
     @Column(name = "appaterno", nullable = false, length = 30)
-    @NotNull    
+    @NotNull
     @Size(max = 30, message = "El apellido paterno no puede tener más de 30 caracteres")
     private String appaterno;
 
@@ -35,7 +35,7 @@ public class UsuarioEntity {
 
     @Column(name = "email_usuario", nullable = false, length = 50)
     @NotNull
-    @Email(message = "El formato del email no es válido")   
+    @Email(message = "El formato del email no es válido")
     @Size(max = 50, message = "El email no puede tener más de 50 caracteres")
     private String emailUsuario;
 
@@ -57,8 +57,8 @@ public class UsuarioEntity {
     @Column(name = "contrasena_usuario", nullable = false, length = 10)
     @NotNull
     @Size(min = 8, max = 10, message = "La contraseña debe tener entre 8 y 10 caracteres")
-    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).*$", 
+    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).*$",
             message = "La contraseña debe contener al menos un número, una letra mayúscula, una minúscula y un carácter especial")
-    private String contrasenaUsuario;                                                                                              
-    
+    private String contrasenaUsuario;
+
 }

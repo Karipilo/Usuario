@@ -1,4 +1,4 @@
-package com.service;
+package com.usuario.usuario.service;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -6,10 +6,10 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.model.Usuario;
-import com.model.dto.UsuarioDto;
-import com.model.entity.UsuarioEntity;
-import com.repository.UsuarioRepository;
+import com.usuario.usuario.model.Usuario;
+import com.usuario.usuario.model.dto.UsuarioDto;
+import com.usuario.usuario.model.entity.UsuarioEntity;
+import com.usuario.usuario.repository.UsuarioRepository;
 
 import jakarta.transaction.Transactional;
 
@@ -95,7 +95,6 @@ public class UsuarioService {
                 entity.getTelefonoUsuario(),
                 entity.getGeneroUsuario(),
                 entity.getContrasenaUsuario()
-
         );
     }
 

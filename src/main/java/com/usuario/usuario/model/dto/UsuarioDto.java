@@ -1,4 +1,4 @@
-package com.model.dto;
+package com.usuario.usuario.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,8 +9,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 
 public class UsuarioDto {
-    private Long idUsuario; 
+
+    private Long idUsuario;
     private String nombreUsuario;
     private String appaterno;
-    private String emailUsuario;    
+    private String emailUsuario;
 }

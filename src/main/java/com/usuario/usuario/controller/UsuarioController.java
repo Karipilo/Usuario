@@ -1,4 +1,4 @@
-package com.controller;
+package com.usuario.usuario.controller;
 
 import java.util.List;
 import java.util.Map;
@@ -15,8 +15,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.model.Usuario;
-import com.model.dto.UsuarioDto;
+import com.usuario.usuario.model.Usuario;
+import com.usuario.usuario.model.dto.UsuarioDto;
+import com.usuario.usuario.service.UsuarioService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
@@ -26,7 +27,7 @@ import jakarta.validation.Valid;
 public class UsuarioController {
 
     @Autowired
-    private com.service.UsuarioService usuarioService;
+    private UsuarioService usuarioService;
 
     @PostMapping
     @Operation(summary = "Este endpoint permite agregar usuarios")
