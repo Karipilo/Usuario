@@ -57,8 +57,7 @@ public class UsuarioEntity {
     @Column(name = "contrasena_usuario", nullable = false, length = 10)
     @NotNull
     @Size(min = 8, max = 10, message = "La contraseña debe tener entre 8 y 10 caracteres")
-    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).*$",
-            message = "La contraseña debe contener al menos un número, una letra mayúscula, una minúscula y un carácter especial")
+    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).*$", message = "La contraseña debe contener al menos un número, una letra mayúscula, una minúscula y un carácter especial")
     private String contrasenaUsuario;
 
 }

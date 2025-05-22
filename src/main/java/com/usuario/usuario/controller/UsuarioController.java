@@ -36,6 +36,13 @@ public class UsuarioController {
         return ResponseEntity.ok("Usuario creado exitosamente");
     }
 
+    @GetMapping("/obtenerUsuarioporProducto/{idUsuario}/{idProducto}")
+    public ResponseEntity<String> obtenerUsuarioporProducto(
+            @PathVariable Long idUsuario,
+            @PathVariable Long idProducto) {
+        return ResponseEntity.ok(usuarioService.obtenerUsuarioporProducto(idUsuario, idProducto));
+    }
+
     @GetMapping("/{nombreUsuario}")
     public ResponseEntity<Usuario> obtenerUsuario(@PathVariable String nombreUsuario) {
         Usuario usuario = usuarioService.obtenerUsuario(nombreUsuario);

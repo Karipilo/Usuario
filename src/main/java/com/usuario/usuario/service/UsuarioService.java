@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import com.usuario.usuario.model.Usuario;
 import com.usuario.usuario.model.dto.UsuarioDto;
@@ -18,23 +19,55 @@ public class UsuarioService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+    @Autowired
+    private RestTemplate restTemplate;
+
+    public String obtenerUsuarioporProducto(Long idUsuario, Long idProducto) {
+        try {
+            // Llamada al microservicio de productos para obtener la info del producto
+            String productoUrl = "http://localhost:8080/productos/" + idProducto;
+            String productoData = restTemplate.getForObject(productoUrl, String.class);
+
+            if (productoData == null) {
+                return "No se encontraron los datos del producto";
+            }
+
+            // Obtener usuario desde la BD
+            UsuarioDto usuarioDto = obtenerUsuarioPorId(idUsuario);
+            if (usuarioDto == null) {
+                return "Usuario no encontrado";
+            }
+
+            // Combinar la info de usuario y producto para devolverla (ejemplo básico)
+            return "Usuario: " + usuarioDto.getNombreUsuario() + ", Producto: " + productoData;
+
+        } catch (Exception e) {
+            return "Error al obtener usuario por producto: " + e.getMessage();
+        }
+    }
 
     @Transactional
     public String crearUsuario(Usuario usuario) {
-        if (usuarioRepository.existsByNombreUsuario(usuario.getNombreUsuario())) {
-            return "El usuario ya existe";
+        try {
+            if (usuarioRepository.existsByNombreUsuario(usuario.getNombreUsuario())) {
+                return "El usuario ya existe";
+            }
+            UsuarioEntity usuarioNuevo = mapToEntity(usuario);
+            usuarioRepository.save(usuarioNuevo);
+            return "Usuario creado exitosamente";
+        } catch (Exception e) {
+            return "Error al crear el usuario: " + e.getMessage();
         }
-        UsuarioEntity usuarioNuevo = mapToEntity(usuario);
-        usuarioRepository.save(usuarioNuevo);
-        return "Usuario creado exitosamente";
     }
 
     public Usuario obtenerUsuario(String nombreUsuario) {
-        UsuarioEntity usuario = usuarioRepository.findByNombreUsuario(nombreUsuario).orElse(null);
-        if (usuario != null) {
-            return mapToModel(usuario);
+        try {
+            UsuarioEntity usuario = usuarioRepository.findByNombreUsuario(nombreUsuario)
+                    .orElse(null);
+            return usuario != null ? mapToModel(usuario) : null;
+        } catch (Exception e) {
+            throw new RuntimeException("Error al obtener usuario: " + e.getMessage());
         }
-        return null;
     }
 
     public List<Usuario> obtenerTodosLosUsuarios() {
@@ -49,7 +82,7 @@ public class UsuarioService {
         if (existente != null) {
             existente.setNombreUsuario(usuario.getNombreUsuario());
             existente.setAppaterno(usuario.getAppaterno());
-            existente.setAppaterno(usuario.getAppaterno());
+            existente.setApmaterno(usuario.getApmaterno());
             existente.setEmailUsuario(usuario.getEmailUsuario());
             existente.setDireccionUsuario(usuario.getDireccionUsuario());
             existente.setTelefonoUsuario(usuario.getTelefonoUsuario());
@@ -75,7 +108,7 @@ public class UsuarioService {
         UsuarioEntity entity = new UsuarioEntity();
         entity.setNombreUsuario(usuario.getNombreUsuario());
         entity.setAppaterno(usuario.getAppaterno());
-        entity.setApmaterno(usuario.getAppaterno());
+        entity.setApmaterno(usuario.getApmaterno());
         entity.setEmailUsuario(usuario.getEmailUsuario());
         entity.setDireccionUsuario(usuario.getDireccionUsuario());
         entity.setTelefonoUsuario(usuario.getTelefonoUsuario());
@@ -85,17 +118,25 @@ public class UsuarioService {
     }
 
     private Usuario mapToModel(UsuarioEntity entity) {
-        return new Usuario(
-                entity.getIdUsuario(),
-                entity.getNombreUsuario(),
-                entity.getAppaterno(),
-                entity.getApmaterno(),
-                entity.getEmailUsuario(),
-                entity.getDireccionUsuario(),
-                entity.getTelefonoUsuario(),
-                entity.getGeneroUsuario(),
-                entity.getContrasenaUsuario()
-        );
+        try {
+            if (entity == null) {
+                return null;
+            }
+
+            return Usuario.builder()
+                    .idUsuario(entity.getIdUsuario())
+                    .nombreUsuario(entity.getNombreUsuario())
+                    .appaterno(entity.getAppaterno())
+                    .apmaterno(entity.getApmaterno())
+                    .emailUsuario(entity.getEmailUsuario())
+                    .direccionUsuario(entity.getDireccionUsuario())
+                    .telefonoUsuario(entity.getTelefonoUsuario())
+                    .generoUsuario(entity.getGeneroUsuario())
+                    .contrasenaUsuario(entity.getContrasenaUsuario())
+                    .build();
+        } catch (Exception e) {
+            throw new RuntimeException("Error al mapear UsuarioEntity a Usuario: " + e.getMessage());
+        }
     }
 
     public UsuarioDto obtenerUsuarioPorId(Long idUsuario) {

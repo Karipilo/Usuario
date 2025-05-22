@@ -6,17 +6,20 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 
-
 public class Usuario {
+
+    private Long idProducto;
     private Long idUsuario;
-    
+
     @NotNull
     @Size(max = 50, message = "El nombre no puede tener más de 50 caracteres")
     private String nombreUsuario;
@@ -48,7 +51,6 @@ public class Usuario {
 
     @NotNull
     @Size(min = 8, max = 10, message = "La contraseña debe tener entre 8 y 10 caracteres")
-    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).*$", 
-            message = "La contraseña debe contener al menos un número, una letra mayúscula, una minúscula y un carácter especial")
+    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).*$", message = "La contraseña debe contener al menos un número, una letra mayúscula, una minúscula y un carácter especial")
     private String contrasenaUsuario;
 }
