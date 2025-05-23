@@ -14,10 +14,12 @@ public class UsuarioMapper {
                 entity.getIdUsuario(),
                 entity.getNombreUsuario(),
                 entity.getAppaterno(),
-                entity.getEmailUsuario()
-        );
+                entity.getEmailUsuario());
     }
 
+    /*
+     * holiiii
+     */
     public static UsuarioEntity toEntity(UsuarioDto dto) {
         if (dto == null) {
             return null;

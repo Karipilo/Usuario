@@ -25,7 +25,7 @@ public class UsuarioService {
     public String obtenerUsuarioporProducto(Long idUsuario, Long idProducto) {
         try {
             // Llamada al microservicio de productos para obtener la info del producto
-            String productoUrl = "http://localhost:8080/productos/" + idProducto;
+            String productoUrl = "http://localhost:8080/api/v1/productos/obtenerProductoDto/" + idProducto;
             String productoData = restTemplate.getForObject(productoUrl, String.class);
 
             if (productoData == null) {
