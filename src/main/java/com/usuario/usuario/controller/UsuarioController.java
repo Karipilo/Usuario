@@ -23,7 +23,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/usuarios")
+@RequestMapping("api/v1/usuarios")
 public class UsuarioController {
 
     @Autowired
@@ -34,13 +34,6 @@ public class UsuarioController {
     public ResponseEntity<String> crearUsuario(@Valid @RequestBody Usuario usuario) {
         usuarioService.crearUsuario(usuario);
         return ResponseEntity.ok("Usuario creado exitosamente");
-    }
-
-    @GetMapping("/obtenerUsuarioporProducto/{idUsuario}/{idProducto}")
-    public ResponseEntity<String> obtenerUsuarioporProducto(
-            @PathVariable Long idUsuario,
-            @PathVariable Long idProducto) {
-        return ResponseEntity.ok(usuarioService.obtenerUsuarioporProducto(idUsuario, idProducto));
     }
 
     @GetMapping("/{nombreUsuario}")
@@ -95,4 +88,10 @@ public class UsuarioController {
         return ResponseEntity.notFound().build();
     }
 
+    @GetMapping("/obtenerUsuarioporProducto/{idUsuario}/{idProducto}")
+    public ResponseEntity<String> obtenerUsuarioporProducto(
+            @PathVariable Long idUsuario,
+            @PathVariable Long idProducto) {
+        return ResponseEntity.ok(usuarioService.obtenerUsuarioporProducto(idUsuario, idProducto));
+    }
 }
